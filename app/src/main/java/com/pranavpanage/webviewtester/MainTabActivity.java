@@ -48,6 +48,7 @@ public class MainTabActivity extends AppCompatActivity {
         SectionsPageAdapter adapter= new SectionsPageAdapter(getSupportFragmentManager());
         adapter.addFragment(new LoadURL(),"Load From URL");
         adapter.addFragment(new LoadLocal(),"Load HTML Content");
+        adapter.addFragment(new LoadWebViewInfo(),"Load WebView Information");
 
 
 

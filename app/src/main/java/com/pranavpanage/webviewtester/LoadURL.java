@@ -16,6 +16,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.StringTokenizer;
+
 /**
  * Created by Pranav on 1/17/2018.
  */
@@ -69,21 +71,27 @@ public class LoadURL extends Fragment{
 
             @Override
             public void onClick(View view) {
-
-
                 //Toast.makeText(getContext(),enteredURL.getText().toString(),Toast.LENGTH_LONG);
                 myWebView.setWebViewClient(new WebViewClient());
-               // if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                    Toast.makeText(getContext(),new WebView(getContext()).getSettings().getUserAgentString(),Toast.LENGTH_LONG);
+
+                /*
+                String[] result = new WebView(getContext()).getSettings().getUserAgentString().split("\\s");
+                for (int x=0; x<result.length; x++) {
+                    if (result[x].contains("Chrome"))
+                        Toast.makeText(getContext(), result[x], Toast.LENGTH_LONG).show();
+
+                }
+
+                // if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                    //Toast.makeText(getContext(),new WebView(getContext()).getSettings().getUserAgentString(),Toast.LENGTH_LONG);
                 Log.i("Pranav", new WebView(getContext()).getSettings().getUserAgentString());
                // }
                 //Toast.makeText(getContext(), "test", Toast.LENGTH_LONG).show();
+                */
                 myWebView.loadUrl(enteredURL.getText().toString());
-
-
-
             }
         });
+
 
 
 

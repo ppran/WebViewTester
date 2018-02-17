@@ -9,4 +9,6 @@
     <string name="Load">Load</string>
     <string name="StartURL">https://www.</string>
     <string name="pastehtml">Paste HTML Content here</string>
+    <string name="WebViewInfo">WebView Info</string>
+    <string name="userAgent">Default WebView UserAgent Details</string>
 </resources>
