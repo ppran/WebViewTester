@@ -11,4 +11,5 @@
     <string name="pastehtml">Paste HTML Content here</string>
     <string name="WebViewInfo">WebView Info</string>
     <string name="userAgent">Default WebView UserAgent Details</string>
+    <string name="ToggleDebug">Debug</string>
 </resources>

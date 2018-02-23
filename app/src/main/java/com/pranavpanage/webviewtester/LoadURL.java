@@ -12,9 +12,11 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import java.util.StringTokenizer;
 
@@ -49,17 +51,32 @@ public class LoadURL extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view= inflater.inflate(R.layout.loadurl,container,false);
-
-
-
         myWebView = (WebView) view.findViewById(R.id.webView);
-
 
         //Enabling Javascript
         WebSettings webSettings = myWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
 
+        //Setting Debugging Mode on/off
+        ToggleButton toggle = (ToggleButton) view.findViewById(R.id.toggleButton);
+        toggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    // The toggle is enabled
 
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                        myWebView.setWebContentsDebuggingEnabled(true);
+                        Toast.makeText(getContext(), "Debugging Mode Enabled", Toast.LENGTH_LONG).show();
+                    }
+                } else {
+                    // The toggle is disabled
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                        myWebView.setWebContentsDebuggingEnabled(false);
+                        Toast.makeText(getContext(), "Debugging Mode Disabled", Toast.LENGTH_LONG).show();
+                    }
+                }
+            }
+        });
 
         enteredURL = (EditText) view.findViewById(R.id.EnterdURL);
         enteredURL.setSelection(enteredURL.getText().length());
@@ -92,15 +109,7 @@ public class LoadURL extends Fragment{
             }
         });
 
-
-
-
-
-
-
         return view;
     }
-
-
 
 }
