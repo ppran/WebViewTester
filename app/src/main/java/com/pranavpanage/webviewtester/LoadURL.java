@@ -65,14 +65,24 @@ public class LoadURL extends Fragment{
                     // The toggle is enabled
 
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                        myWebView.setWebContentsDebuggingEnabled(true);
-                        Toast.makeText(getContext(), "Debugging Mode Enabled", Toast.LENGTH_LONG).show();
+
+                        try {
+                            myWebView.setWebContentsDebuggingEnabled(true);
+                            Toast.makeText(getContext(), "Debugging Mode Enabled", Toast.LENGTH_LONG).show();
+                        }catch (Exception e){
+                            Toast.makeText(getContext(), "Failed to Enable debugging mode. Error :" + e.toString(), Toast.LENGTH_LONG).show();
+                        }
+
                     }
                 } else {
                     // The toggle is disabled
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                        myWebView.setWebContentsDebuggingEnabled(false);
-                        Toast.makeText(getContext(), "Debugging Mode Disabled", Toast.LENGTH_LONG).show();
+                        try {
+                            myWebView.setWebContentsDebuggingEnabled(false);
+                            Toast.makeText(getContext(), "Debugging Mode Disabled", Toast.LENGTH_LONG).show();
+                        }catch (Exception e){
+                            Toast.makeText(getContext(), "Failed to Enable debugging mode. Error :" + e.toString(), Toast.LENGTH_LONG).show();
+                        }
                     }
                 }
             }
