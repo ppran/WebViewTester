@@ -11,6 +11,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -144,4 +145,5 @@ public class LoadWebViewInfo extends android.support.v4.app.Fragment{
        mainListView.setAdapter( listAdapter );
         return view;
     }
+
 }

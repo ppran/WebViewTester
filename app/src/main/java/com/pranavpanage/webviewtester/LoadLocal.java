@@ -1,11 +1,13 @@
 package com.pranavpanage.webviewtester;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -45,16 +47,15 @@ public class LoadLocal extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view= inflater.inflate(R.layout.local,container,false);
-
-
         myWebView = (WebView) view.findViewById(R.id.webView2);
-
 
         //Enabling Javascript
         WebSettings webSettings = myWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
 
 
+        myWebView.addJavascriptInterface(new WebAppInterface(getContext()), "Android");
+        myWebView.addJavascriptInterface(new WebViewJavaScriptInterface(getContext()), "app");
 
         enteredURL = (EditText) view.findViewById(R.id.enterHTML);
 
@@ -71,17 +72,68 @@ public class LoadLocal extends Fragment {
                 //myWebView.setWebViewClient(new WebViewClient());
                 Toast.makeText(getContext(),myWebView.getSettings().getUserAgentString(),Toast.LENGTH_LONG);
                 myWebView.loadData(enteredURL.getText().toString(),"text/html", "UTF-8");
-
-
-
             }
         });
 
 
+        //When Load URL Button Clicked
+        Button loadJavascript = (Button) view.findViewById(R.id.loadJavascript);
+
+        loadJavascript.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
 
 
+                myWebView.loadUrl("file:///android_asset/web.html");
+                //Toast.makeText(getContext(),enteredURL.getText().toString(),Toast.LENGTH_LONG);
+                //myWebView.setWebViewClient(new WebViewClient());
+                //Toast.makeText(getContext(),myWebView.getSettings().getUserAgentString(),Toast.LENGTH_LONG);
+               // myWebView.loadData(enteredURL.getText().toString(),"text/html", "UTF-8");
+            }
+        });
 
         return view;
     }
+    public class WebAppInterface {
+        Context mContext;
+
+        /** Instantiate the interface and set the context */
+        WebAppInterface(Context c) {
+            mContext = c;
+        }
+
+        /** Show a toast from the web page */
+        @JavascriptInterface
+        public void showToast(String toast) {
+            Toast.makeText(mContext, "Called from Javascript: " + toast, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /*
+ * JavaScript Interface. Web code can access methods in here
+ * (as long as they have the @JavascriptInterface annotation)
+ */
+    public class WebViewJavaScriptInterface{
+
+        private Context context;
+
+        /*
+         * Need a reference to the context in order to sent a post message
+         */
+        public WebViewJavaScriptInterface(Context context){
+            this.context = context;
+        }
+
+        /*
+         * This method can be called from Android. @JavascriptInterface
+         * required after SDK version 17.
+         */
+        @JavascriptInterface
+        public void makeToast(String message, boolean lengthLong){
+            Toast.makeText(context, "Called from Javascript: "+ message, (lengthLong ? Toast.LENGTH_LONG : Toast.LENGTH_SHORT)).show();
+        }
+    }
+
 }
 
